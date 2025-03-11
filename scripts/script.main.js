@@ -59,11 +59,12 @@ let curStatus=``;
 let curAlbum=``;
 let curMusic=0;
 async function applyStatusChange(){
-	if(statusData.changed && curStatus!=statusData.status){
+	$(`.tapeCover`).html(JSON.stringify(statusData));
+	if(statusData.changed){
 		// Do something for status change
-		$(`.tapeCover`).html(JSON.stringify(statusData));
 		claimStatusData().then(()=>{
 			curStatus=statusData.status;
+			curMusic=statusData.music;
 		});
 	}
 }
