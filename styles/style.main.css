@@ -1,0 +1,10 @@
+body{
+	margin:0px;
+	padding:0px;
+	background:transparent;
+}
+.mainFrame{
+	width:512px;
+	height:512px;
+	border:1px solid #F00;
+}
