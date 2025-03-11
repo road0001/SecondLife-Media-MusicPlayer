@@ -6,6 +6,7 @@ $defaultData=array(
 	'status'=>'stop',
 	'music'=>0,
 	'path'=>'',
+	'changed'=>false,
 );
 $statusData=array();
 function loadData(){
@@ -74,6 +75,11 @@ function utf8ize($data) {
 		return $data;
     }
     return $data;
+}
+
+function is_list($array){
+	if (!is_array($array)) return false;
+    return array_keys($array) == range(0, count($array) - 1);
 }
 
 function getAlbumList(){
@@ -171,7 +177,11 @@ if(isset($_GET) && isset($_GET['type'])){
 	}
 	if($result!=''){
 		if(isset($_GET['lsl']) && $_GET['lsl']=='1'){
-			exit(implode('|',$result));
+			if(is_list($result)){
+				exit(implode('|',$result));
+			}else{
+				exit(implode("|", array_map(function($k, $v){return "$k|$v";}, array_keys($result), $result)));
+			}
 		}else{
 			exit(json_encode($result, JSON_UNESCAPED_UNICODE));
 		}
