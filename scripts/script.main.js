@@ -59,7 +59,7 @@ let curStatus=``;
 let curAlbum=``;
 let curMusic=0;
 async function applyStatusChange(){
-	$(`.tapeCover`).html(JSON.stringify(statusData));
+	// $(`.tapeCover`).html(JSON.stringify(statusData));
 	if(statusData.changed){
 		// Do something for status change
 		claimStatusData().then(()=>{
@@ -101,7 +101,8 @@ function applyButtonEvents(){
 function main(){
 	applyGetStatus();
 	applyButtonEvents();
-	$(`.tapeLeft`).html(navigator.userAgent);
+	initTapeFrame(`#tapeMain`,true);
+	// $(`.tapeLeft`).html(navigator.userAgent);
 }
 
 window.onload=function(){

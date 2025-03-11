@@ -34,3 +34,19 @@ body{
 	height:1024px;
 	border:1px solid #F00;
 }
+
+.tapeFrame{
+	position:fixed;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	width:512px;
+	height:320px;
+	margin:auto;
+	background:#0F0;
+}
+.tapeMain{
+	transform-origin:0 0;
+	transform: scale(0.5);
+}
