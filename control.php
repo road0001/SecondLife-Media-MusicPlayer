@@ -127,8 +127,7 @@ function getMusicName($i){
 }
 
 if(isset($_GET) && isset($_GET['type'])){
-	$result='';
-	loadData();
+	$result=loadData();
 	switch($_GET['type']){
 		case 'get': default:
 			$result=getData();

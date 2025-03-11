@@ -3,8 +3,33 @@ body{
 	padding:0px;
 	background:transparent;
 }
+
+*{
+	font-family: 'DOSVGA437','DOSVGA437Moder','VonwaonBitmap16','宋体','微软雅黑';
+}
+
+@font-face{
+	font-family: DOSVGA437;
+	font-display:swap;
+	src: url('font/Perfect DOS VGA 437.woff.edit.ttf'),
+	url('font/Perfect DOS VGA 437.woff.edit.ttf');
+	unicode-range:U+00-52F, U+1E00-1FFF, U+2200-22FF;
+}
+@font-face{
+	font-family: DOSVGA437Moder;
+	font-display:swap;
+	src: url('font/Moder DOS 437 Win.ttf'),
+	url('font/Moder DOS 437 Win.ttf');
+}
+@font-face{
+	font-family: VonwaonBitmap16;
+	font-display:swap;
+	src: url('font/VonwaonBitmap-16px.ttf'),
+	url('font/VonwaonBitmap-16px.ttf');
+}
+
 .mainFrame{
-	width:512px;
-	height:512px;
+	width:1024px;
+	height:1024px;
 	border:1px solid #F00;
 }

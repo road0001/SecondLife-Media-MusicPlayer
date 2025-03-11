@@ -13,11 +13,59 @@ async function getStatusData(){
 			...defaultStatusData,
 			...JSON.parse(await ajaxPromise(`control.php?type=get`)),
 		};
-		$(`.tapeCover`).html(JSON.stringify(statusData));
+		applyStatusChange();
 	}catch(e){
 		console.error(e);
 	}
 	return statusData;
+}
+
+async function claimStatusData(){
+	try{
+		statusData={
+			...defaultStatusData,
+			...JSON.parse(await ajaxPromise(`control.php?type=claim`)),
+		};
+	}catch(e){
+		console.error(e);
+	}
+	return statusData;
+}
+
+async function setStatusData(key, val){
+	try{
+		statusData={
+			...defaultStatusData,
+			...JSON.parse(await ajaxPromise(`control.php?type=set&${key}=${val}`)),
+		};
+		applyStatusChange();
+	}catch(e){
+		console.error(e);
+	}
+}
+
+async function setPlay(sta){
+	try{
+		statusData={
+			...defaultStatusData,
+			...JSON.parse(await ajaxPromise(`control.php?type=${sta}`)),
+		};
+	}catch(e){
+		console.error(e);
+	}
+}
+
+let curStatus=``;
+let curAlbum=``;
+let curMusic=0;
+async function applyStatusChange(){
+	if(statusData.changed && curStatus!=statusData.status){
+		// Do something for status change
+		$(`.tapeCover`).html(JSON.stringify(statusData));
+		claimStatusData().then(()=>{
+			curStatus=statusData.status;
+		});
+	}
 }
 
 
@@ -25,13 +73,28 @@ let getStatusInterval;
 function applyGetStatus(){
 	clearInterval(getStatusInterval);
 	getStatusData();
+	applyStatusChange();
 	getStatusInterval=setInterval(()=>{
 		getStatusData();
-	},5000);
+	},2000);
 }
 
 function applyButtonEvents(){
-
+	$(`#controlBu_pause`).bind(`click`,function(){
+		setPlay(`pause`);
+	});
+	$(`#controlBu_eject`).bind(`click`,function(){
+		setPlay(`stop`);
+	});
+	$(`#controlBu_prev`).bind(`click`,function(){
+		setPlay(`prev`);
+	});
+	$(`#controlBu_next`).bind(`click`,function(){
+		setPlay(`next`);
+	});
+	$(`#controlBu_play`).bind(`click`,function(){
+		setPlay(`play`);
+	});
 }
 
 function main(){
