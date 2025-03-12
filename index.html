@@ -7,25 +7,30 @@
 	<script src="scripts/script.utils.js"></script>
 	<script src="scripts/script.main.js"></script>
 	<script src="scripts/script.tape.js"></script>
+	<script src="scripts/script.music.js"></script>
 	<link rel="stylesheet" href="styles/style.main.css">
 	<link rel="stylesheet" href="styles/style.tape.css">
 </head>
 <body>
 	<div class="mainFrame">
 		<div id="tapeFrame" class="tapeFrame">
-			<div id="tapeMain" class="tapeMain">
-				<div class="tapeCover"></div>
-				<div class="tapeLeft"></div>
-				<div class="tapeRight"></div>
-			</div>
+			<div id="tapeMain" class="tapeMain"></div>
 		</div>
 		<div class="controlFrame">
-			<button id="controlBu_pause" class="controlBu pause">P</button>
-			<button id="controlBu_eject" class="controlBu eject">E</button>
-			<button id="controlBu_prev" class="controlBu prev">P</button>
-			<button id="controlBu_next" class="controlBu next">N</button>
-			<button id="controlBu_play" class="controlBu play">P</button>
+			<button id="controlBu_pause" class="controlBu pause">‖</button>
+			<button id="controlBu_eject" class="controlBu eject">∨</button>
+			<button id="controlBu_prev" class="controlBu prev">＜</button>
+			<button id="controlBu_next" class="controlBu next">＞</button>
+			<button id="controlBu_play" class="controlBu play">▶</button>
 		</div>
 		<marquee behavior="scroll" direction="left">这是一个滚动字幕</marquee>
+		<div id="vuL" class="vu l"></div>
+		<div id="vuR" class="vu r"></div>
+		<div id="screen" class="screen">
+			<div class="container musicName"><span id="musicName"></span></div>
+			<div class="container musicTime"><span id="musicTime"></span></div>
+			<div class="container musicLrc"><span id="musicLrc"></span></div>
+			<div class="container texture"></div>
+		</div>
 	</div>
 </body>

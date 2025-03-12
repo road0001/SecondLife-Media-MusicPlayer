@@ -6,6 +6,8 @@ $defaultData=array(
 	'status'=>'stop',
 	'music'=>0,
 	'path'=>'',
+	'volume'=>1,
+	'loop'=>1,
 	'changed'=>false,
 );
 $statusData=array();
@@ -49,6 +51,9 @@ function getData(){
 function setData($key,$val){
 	global $statusData;
 	$statusData[$key]=$val;
+	if($key=='path'){
+		$statusData['music']=0;
+	}
 	$statusData['changed']=true;
 	saveData();
 	return $statusData;
@@ -110,7 +115,12 @@ function getMusicList(){
 		$files = array_merge($files, utf8ize(glob("$musicpath/$statusData[path]/*.$ext")));
 	}
 	natsort($files);
-	return array_values($files);
+	$fileList=array_values($files);
+	for($i=0; $i<count($fileList); $i++){
+		$fsp=explode('/',$fileList[$i]);
+		$fileList[$i]=end($fsp);
+	}
+	return $fileList;
 }
 
 function getMusicIndex($name){
@@ -160,16 +170,29 @@ if(isset($_GET) && isset($_GET['type'])){
 				if($name){
 					$result=setData('music',(int)$_GET['music']);
 				}
+			}else if(isset($_GET['volume'])){
+				$result=setData('volume',(float)$_GET['volume']);
+			}
+			else if(isset($_GET['loop'])){
+				$result=setData('loop',$_GET['loop']=='0'?0:1);
 			}
 		break;
 
 		case 'prev': case 'next':
 			$musicList=getMusicList();
 			$curIndex=$statusData['music'];
-			if($_GET['type']=='prev' && $curIndex>0){
-				$curIndex--;
-			}else if($_GET['type']=='next' && $curIndex<count($musicList)-1){
-				$curIndex++;
+			if($_GET['type']=='prev'){
+				if($curIndex>0){
+					$curIndex--;
+				}else if($curIndex<=0 && $statusData['loop']==1){
+					$curIndex=count($musicList)-1;
+				}
+			}else if($_GET['type']=='next'){
+				if($curIndex<count($musicList)-1){
+					$curIndex++;
+				}else if($curIndex>=count($musicList)-1 && $statusData['loop']==1){
+					$curIndex=0;
+				}
 			}
 			$result=setData('music',$curIndex);
 		break;
