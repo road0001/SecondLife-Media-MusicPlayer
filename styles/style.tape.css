@@ -48,7 +48,6 @@
     left: 468px;
 }
 
-
 .tapeVolume, .tapeMaterial{
 	position:absolute;
 	top:0px;
@@ -76,7 +75,23 @@
 	background-image: url('tape-gear.png');
 }
 .tapeGearMachine{
-	background-image: url('tape-machine.png');
+	background-image: url('tape-gear-machine.png');
+}
+
+.tapeWheel{
+	position:absolute;
+	top:510px;
+	left:-20px;
+	width:64px;
+	height:64px;
+	background-size:cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: url('tape-wheel.png');
+}
+.tapeRoll.right .tapeWheel{
+	left:auto;
+	right:-20px;
 }
 
 .tapeCover{
@@ -115,9 +130,83 @@
 	pointer-events: none;
 }
 
-.rotate, .scale{
+.rotate, .scale, .rotateNormal, .scaleX{
 	transition:transform 0.1s ease;
 }
+
+.tapeBand{
+	position:absolute;
+	height:2px;
+	background:#000;
+}
+.tapeBand.bottom{
+	left:50px;
+	right:50px;
+	bottom:30px;
+}
+
+
+.tapeRoll .tapeBand{
+	background:transparent;
+	top:230px;
+	width:20px;
+	height:300px;
+}
+
+.tapeRoll.left .tapeBand{
+	transform: scaleX(-1);
+	left:-20px;
+}
+.tapeRoll.right .tapeBand{
+	left:auto;
+	right:-20px;
+}
+
+.tapeBaseMachine{
+	transition:all 0.1s ease;
+}
+
+.tapeBaseMachine.shaft{
+	position:absolute;
+	bottom:30px;
+	right:265px;
+	width:12px;
+	height:12px;
+	border-radius: 100%;
+	background-size:cover;
+	background-position: center;
+	background-image:url('tape-machine-shaft.png');
+}
+
+.tapeBaseMachine.reader{
+	position:absolute;
+	width:160px;
+	height:160px;
+	background-size:auto 100%;
+	background-image:url('tape-machine.png');
+}
+
+.tapeBaseMachine.reader.head{
+	bottom:-80px;
+	right:430px;
+	background-position:0px 0px;
+}
+
+.tapeBaseMachine.wheelRack{
+	bottom:-90px;
+	right:192px;
+	background-position:-160px 0px;
+}
+.tapeBaseMachine.wheel{
+	bottom:-90px;
+	right:192px;
+	background-position:-320px 0px;
+}
+
+.tapeBaseMachine.idle{
+	bottom:-120px !important;
+}
+
 
 /* @keyframes rotate {
 	from {
