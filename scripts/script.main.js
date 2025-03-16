@@ -7,11 +7,13 @@ let defaultStatusData={
 let statusData={
 	...defaultStatusData,
 };
+let interface=`control.php`;
+let flag=_GET(`flag`);
 async function getStatusData(){
 	try{
 		statusData={
 			...defaultStatusData,
-			...JSON.parse(await ajaxPromise(`control.php?type=get`)),
+			...JSON.parse(await ajaxPromise(`${interface}?flag=${flag}&type=get`)),
 		};
 		applyStatusChange();
 	}catch(e){
@@ -24,7 +26,7 @@ async function claimStatusData(){
 	try{
 		statusData={
 			...defaultStatusData,
-			...JSON.parse(await ajaxPromise(`control.php?type=claim`)),
+			...JSON.parse(await ajaxPromise(`${interface}?flag=${flag}&type=claim`)),
 		};
 	}catch(e){
 		console.error(e);
@@ -36,7 +38,7 @@ async function setStatusData(key, val){
 	try{
 		statusData={
 			...defaultStatusData,
-			...JSON.parse(await ajaxPromise(`control.php?type=set&${key}=${val}`)),
+			...JSON.parse(await ajaxPromise(`${interface}?flag=${flag}&type=set&${key}=${val}`)),
 		};
 		applyStatusChange();
 	}catch(e){
@@ -48,7 +50,7 @@ async function setPlay(sta){
 	try{
 		statusData={
 			...defaultStatusData,
-			...JSON.parse(await ajaxPromise(`control.php?type=${sta}`)),
+			...JSON.parse(await ajaxPromise(`${interface}?flag=${flag}&type=${sta}`)),
 		};
 	}catch(e){
 		console.error(e);
@@ -57,7 +59,7 @@ async function setPlay(sta){
 
 let musicList=[];
 async function getMusicList(){
-	musicList=JSON.parse(await ajaxPromise(`control.php?type=list`));
+	musicList=JSON.parse(await ajaxPromise(`${interface}?flag=${flag}&type=list`));
 	console.log(`Get Music List: `,musicList);
 }
 
@@ -72,6 +74,7 @@ let curAlbum;
 let curMusic;
 let curMusicName;
 let curVolume;
+let firstInit=true;
 async function applyStatusChange(force){
 	// $(`.tapeCover`).html(JSON.stringify(statusData));
 	if(statusData.changed || force){
@@ -93,6 +96,15 @@ async function applyStatusChange(force){
 			setVolume(curVolume);
 			if(statusData.status==`play`){
 				playMusic();
+			}
+		}
+
+		if(firstInit && statusData.status==`play` && statusData.changed==true){ // 为了修复页面首次载入时无法播放，必须切换一次的bug
+			firstInit=false;
+			if(musicPlayer && musicPlayer.paused){
+				initMusic(`music/${curAlbum}/${musicList[curMusic]}`);
+				playMusic();
+				insertTape(`music/${curAlbum}/${curMusicName}.jpg`,curMusicName);
 			}
 		}
 		
@@ -137,7 +149,7 @@ async function applyGetStatus(){
 
 let currentName=``;
 let currentLrc=``;
-function setScreenStatus(name, time, lrc){
+function setScreenStatus(name=``, time=0, lrc){
 	let nn=name.split(`/`).at(-1) || `&nbsp;`;
 	$(`#musicName`).html(nn);
 	if(currentName!=nn){
@@ -228,12 +240,15 @@ function main(){
 	applyGetStatus();
 	applyButtonEvents();
 	initTapeFrame(`#tapeMain`,false);
+	setScreenStatus();
 
 
 	setInterval(()=>{
-		let vu=musicPlayer.getVu();
-		$(`#vuL`).css(`width`,`${vu[0]}px`);
-		$(`#vuR`).css(`width`,`${vu[1]}px`);
+		if(typeof musicPlayer==`object`){
+			let vu=musicPlayer.getVu();
+			$(`#vuL`).css(`width`,`${vu[0]}px`);
+			$(`#vuR`).css(`width`,`${vu[1]}px`);
+		}
 	},1000/60);
 	// $(`.tapeLeft`).html(navigator.userAgent);
 }

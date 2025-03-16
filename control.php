@@ -5,11 +5,18 @@ $musicext = ['ogg','flac','wav'];
 $defaultData=array(
 	'status'=>'stop',
 	'music'=>0,
-	'path'=>'',
+	'path'=>getAlbumList()[0],
 	'volume'=>1,
 	'loop'=>1,
 	'changed'=>false,
 );
+$flag='';
+if(isset($_GET['flag'])){
+	$flag=$_GET['flag'];
+	$filename = "status_$flag.json";
+}
+
+
 $statusData=array();
 function loadData(){
 	global $filename;

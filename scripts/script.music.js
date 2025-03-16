@@ -16,6 +16,9 @@ function initMusic(music){
 		setTapeProcess(this.process);
 		if(this.paused){
 			setTapeProcess(false);
+			if(this.currentTime==0){
+				setScreenStatus();
+			}
 		}
 	});
 	musicPlayer.addEventListener(`ended`, () => {
@@ -28,7 +31,11 @@ function playMusic(bool){
 	if(!musicPlayer) return;
 	if(bool==undefined) bool=true;
 	if(bool){
-		musicPlayer.play();
+		try{
+			musicPlayer.play();
+		}catch(e){
+			console.error(e);
+		}
 	}else{
 		musicPlayer.pause();
 	}

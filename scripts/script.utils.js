@@ -31,3 +31,20 @@ function formatTime(seconds) {
     const sec = Math.floor(seconds % 60);
     return `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
 }
+
+function _GET(arg) {
+	var url = location.search; //获取url中"?"符后的字串
+	var theRequest = new Object();
+	if (url.indexOf("?") != -1) {
+		var str = url.substr(1);
+		strs = str.split("&");
+		for(var i = 0; i < strs.length; i ++) {
+			theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+		}
+	}
+	if(arg!=undefined){
+		return theRequest[arg];
+	}else{
+		return theRequest;
+	}
+}

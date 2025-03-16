@@ -37,13 +37,16 @@ body{
 }
 
 .mainFrame{
+	position: fixed;
+	top:0px;
+	left:0px;
 	width:1024px;
 	height:1024px;
 	border:1px solid #F00;
 }
 
 .tapeFrame{
-	position:fixed;
+	position:absolute;
 	top:0px;
 	left:0px;
 	right:0px;
@@ -76,10 +79,16 @@ audio{
 
 .screen{
 	position:absolute;
-	width:100px;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:-512px;
+	width:256px;
 	height:calc(18px * 4);
+	margin:auto;
 	background:#000;
 	color:#FFF;
+	line-height:20px;
 }
 
 .screen .container{
@@ -99,9 +108,14 @@ audio{
 	background-image:url('screen-texture.png');
 }
 
+.container.musicTime{
+	/* text-align: center; */
+}
+
 #musicTime{
 	font-family: 'LCD';
 	font-size:32px;
 	font-weight:light;
 	font-style:italic;
+	line-height:32px;
 }
