@@ -2,8 +2,9 @@
 A music player based on Media web
 
 1.0 20250317
-- Optimized Screen display effects.
+- Added Flags feature to sperate different player.
 - Optimized Tape frame position.
+- Optimized Screen display effects.
 - Fixed A bug that encourted UV error when first init.
 - Fixed A bug that music can't play when page loaded (must change music to play).
 
